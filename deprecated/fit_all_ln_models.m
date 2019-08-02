@@ -8,24 +8,25 @@
 % theta phase will be divided into
 n_pos_bins = 20;
 n_dir_bins = 18;
-n_speed_bins = 10;
+n_speed_bins = 25; % also change numSpd in ln_poisson_model and speedVector in plot_performance_and_parameters
 n_theta_bins = 18;
 
 % compute position matrix
 [posgrid, posVec] = pos_map([posx_c posy_c], n_pos_bins, boxSize);
 
 % compute head direction matrix
-[hdgrid,hdVec,direction] = hd_map_root(root.sheaddir,n_dir_bins);
+[hdgrid,hdVec,direction] = hd_map_root(x.root.sheaddir,n_dir_bins);
 
 % compute speed matrix
-[speedgrid,speedVec,speed] = speed_map(posx_c,posy_c,n_speed_bins);
+% [speedgrid,speedVec,speed] = speed_map(posx_c,posy_c,n_speed_bins); 
+[speedgrid,speedVec,speed] = speed_map(speed,n_speed_bins);
 
 % compute theta matrix
 [thetagrid,thetaVec,phase] = theta_map(filt_eeg,post,eeg_sample_rate,n_theta_bins);
 
 % remove times when the animal ran > 50 cm/s (these data points may contain artifacts)
 too_fast = find(speed >= 50);
-posgrid(too_fast,:) = []; hdgrid(too_fast,:) = [];
+posgrid(too_fast,:) = []; hdgrid(too_fast,:) = []; 
 speedgrid(too_fast,:) = []; thetagrid(too_fast,:) = [];
 spiketrain(too_fast) = [];
 
@@ -60,13 +61,14 @@ A{14} = speedgrid; modelType{14} = [0 0 1 0];
 A{15} = thetagrid; modelType{15} = [0 0 0 1];
 
 % compute a filter, which will be used to smooth the firing rate
-filter = gaussmf(-4:4,[2 0]); filter = filter/sum(filter);
+filter = gaussmf(-4:4,[2 0]); filter = filter/sum(filter); % original
+% filter = gaussmf(-40:40,[20 0]); filter = filter/sum(filter);
 dt = post(3)-post(2); fr = spiketrain/dt;
 smooth_fr = conv(fr,filter,'same');
 
 % compute the number of folds we would like to do
 numFolds = 10;
-keyboard
+
 for n = 1:numModels
     fprintf('\t- Fitting model %d of %d\n', n, numModels);
     [testFit{n},trainFit{n},param{n}] = fit_model(A{n},dt,spiketrain,filter,modelType{n},numFolds);

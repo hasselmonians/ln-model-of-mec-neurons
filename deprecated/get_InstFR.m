@@ -1,5 +1,5 @@
 function [frFilt,spkTrain] = get_InstFR(spktimes, time, sampling_rate_of_time, varargin)
-% use (example):
+% use (example): 
 %     cel = [2 1];
 %     spktimes = get_spktimes_of_cel(root,cel);
 %     [spkRate,~] = get_InstFR(spktimes,root.ts,root.fs_video,'filter_length',125,'filter_type','Gauss');

@@ -1,7 +1,8 @@
-function [Results] = run_LNmodel_HD_root(root,active_lfp,cel)
+% function [Results] = run_LNmodel_HD_root(root,active_lfp,cel)
 % runs the linear non-linear model (Hardcastle et al.) on CMBHOME root object loaded into the workspace
 
-% addpath(genpath('D:\Dropbox (hasselmonians)\hdannenb\Scripts\LNmodel_HD'))
+rmpath(genpath('D:\Dropbox (hasselmonians)\hdannenb\toolboxes\fieldtrip-20170131'))
+addpath(genpath('D:\Dropbox (hasselmonians)\hdannenb\Scripts\LNmodel_HD'))
 %% Description of linear non-linear model published by Hardcastle et al.
 % This script is segmented into several parts. First, the data (an
 % example cell) is loaded. Then, 15 LN models are fit to the
@@ -28,26 +29,27 @@ posy_c = root.sy;
 % let the position points start at 0
 posx_c = posx_c - min(posx_c);
 posy_c = posy_c - min(posy_c);
+speed = root.svel; % get speed signal from CMBHOME object (filtered with get_speed function)
 
 spktimes = get_spktimes_of_cel(root,cel);
+
+%%%%%%%%%%%
 % randomly delete spikes, so that the total number of
-% spikes is 1800 (equivalent to 0.75Hz in a 20-min
+% spikes is 1200 (equivalent to 0.5Hz in a 20-min
 % recording)
-
-% number of spikes
-nmbr_spikes = length(spktimes);
-% nmbr_spikes = 1800;
-
+% nmbr_spikes = length(spktimes);
+nmbr_spikes = 1200;
 if length(spktimes) < nmbr_spikes
     return
 end
 p = randperm(length(spktimes),nmbr_spikes);
 spikes = spktimes(p);
 spikes = sort(spikes);
+%%%%%%%%
 
 % get spike train
-[real_fr,~] = get_InstFR(spktimes,post,root.fs_video,'filter_length',125,'filter_type','Gauss');
-[smooth_fr,spiketrain] = get_InstFR(spikes,post,root.fs_video,'filter_length',125,'filter_type','Gauss');
+[~,real_spiketrain] = get_InstFR(spktimes,post,root.fs_video);
+[~,spiketrain] = get_InstFR(spikes,post,root.fs_video);
 
 boxSize = 100;
 eeg_sample_rate = 600;%250;
@@ -118,8 +120,9 @@ Results.speed_curve = speed_curve;
 Results.scale_factor_pos = scale_factor_pos;
 Results.scale_factor_hd = scale_factor_hd;
 Results.scale_factor_spd = scale_factor_spd;
-% save the firing rate and speed
-Results.fr = smooth_fr;
+% save the spike train
+Results.spktrain = spiketrain;
+Results.real_spktrain = real_spiketrain;
 Results.speed = speed;
 % finally save log-likelihoods of model performance (m x n
 % matrix with m = number of cross-validations, and n =
@@ -127,4 +130,4 @@ Results.speed = speed;
 Results.LLH_values = LLH_values;
 Results.tested_models = tested_models;
 
-rmpath('D:\Dropbox (hasselmonians)\hdannenb\Scripts\LNmodel_HD')
+rmpath(genpath('D:\Dropbox (hasselmonians)\hdannenb\Scripts\LNmodel_HD'))
