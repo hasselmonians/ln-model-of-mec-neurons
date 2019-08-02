@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Set trial_list to first argument - a text file containing a list of mice
+
+mouse=$1
+
+# Loop through each mouse to submit one job per mouse
+
+while read mouse_list
+do
+    qsub batch_Holger.qsub $mouse_list
+
+done<$mouse

@@ -8,7 +8,8 @@
 % create x-axis vectors
 hd_vector = 2*pi/n_dir_bins/2:2*pi/n_dir_bins:2*pi - 2*pi/n_dir_bins/2;
 theta_vector = hd_vector;
-speed_vector = 2.5:50/n_speed_bins:47.5;
+% speed_vector = 2.5:50/n_speed_bins:47.5;
+speed_vector = 1:50/n_speed_bins:49.5;
 
 % plot the tuning curves
 figure(1)
@@ -62,7 +63,7 @@ theta_response = scale_factor_theta*exp(theta_param);
 
 % plot the model-derived response profiles
 subplot(3,4,5)
-imagesc(reshape(pos_response,20,20)); axis off; 
+imagesc(reshape(pos_response,20,20)); axis off;
 subplot(3,4,6)
 plot(hd_vector,hd_response,'k','linewidth',3)
 xlabel('direction angle')
@@ -112,7 +113,9 @@ figure(1)
 subplot(3,4,9:12)
 errorbar(LLH_increase_mean,LLH_increase_sem,'ok','linewidth',3)
 hold on
-plot(selected_model,LLH_increase_mean(selected_model),'.r','markersize',25)
+if ~isnan(selected_model)
+    plot(selected_model,LLH_increase_mean(selected_model),'.r','markersize',25)
+end
 plot(0.5:15.5,zeros(16,1),'--b','linewidth',2)
 hold off
 box off
@@ -120,6 +123,6 @@ set(gca,'fontsize',20)
 set(gca,'XLim',[0 16]); set(gca,'XTick',1:15)
 set(gca,'XTickLabel',{'PHST','PHS','PHT','PST','HST','PH','PS','PT','HS',...
     'HT','ST','P','H','S','T'});
-legend('Model performance','Selected model','Baseline')
-   
+% legend('Model performance','Selected model','Baseline')
+
 

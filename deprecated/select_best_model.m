@@ -14,12 +14,8 @@
 % phst, phs, pht, pst, hst, ph, ps, pt, hs, ht, st, p,  h,  s,  t
 % 1      2    3    4    5    6  7   8   9   10  11  12  13  14  15
 
-
-
 testFit_mat = cell2mat(testFit);
 LLH_values = reshape(testFit_mat(:,3),numFolds,numModels);
-
-
 
 % find the best single model
 singleModels = 12:15;
@@ -35,7 +31,7 @@ elseif top1 == 13 % H -> PH, HS, HT
 elseif top1 == 14 % S -> PS, HS, ST
     [~,top2] = max(nanmean(LLH_values(:,[7 9 11])));
     vec = [7 9 11]; top2 = vec(top2);
-else % T -> PT, HT, ST
+elseif top1 == 15 % T -> PT, HT, ST
     [~,top2] = max(nanmean(LLH_values(:,[8 10 11])));
     vec = [8 10 11]; top2 = vec(top2);
 end
@@ -85,6 +81,7 @@ else
 end
 
 % re-set if selected model is not above baseline
+% pval_baseline = signrank(LLH_values(:,selected_model),[],'tail','right');
 pval_baseline = signrank(LLH_values(:,selected_model),[],'tail','right');
 
 if pval_baseline > 0.05
