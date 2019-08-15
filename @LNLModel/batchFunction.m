@@ -8,7 +8,7 @@ function batchFunction(index, location, batchname, outfile, test)
     addpath(genpath('/projectnb/hasselmogrp/hoyland/RatCatcher'))
     addpath(genpath('/projectnb/hasselmogrp/hoyland/srinivas.gs_mtools'))
     addpath(genpath('/projectnb/hasselmogrp/hoyland/CMBHOME'))
-    addpath(genpath('projectnb/hasselmogrp/hoyland/ln-model-of-mec-neurons'))
+    addpath(genpath('/projectnb/hasselmogrp/hoyland/ln-model-of-mec-neurons'))
   end
 
   % acquire the filename and filecode
