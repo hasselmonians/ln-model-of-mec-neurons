@@ -33,5 +33,6 @@
   %   e.g. csvwrite(outfile, all_the_data);
 
   outfile = [outfile(end-2:end) 'mat'];
+  save(outfile, 'var1', 'var2', 'var3')
 
 % end % function
