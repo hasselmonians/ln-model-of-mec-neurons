@@ -32,5 +32,6 @@
   %% Save the data to a file named "outfile"
   %   e.g. csvwrite(outfile, all_the_data);
 
+  outfile = [outfile(end-2:end) 'mat'];
 
 % end % function
