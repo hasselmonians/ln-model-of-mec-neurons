@@ -18,15 +18,11 @@ function batchFunction(index, location, batchname, outfile, test)
   % load the data
   % expect a 1x1 Session object named "root"
   load(filename);
+  root.cel = filecode;
 
-  %% TODO:
-  %% Do whatever needs to be done here to preprocess
-  %   you should have the "root" object and the "filecode", so
-  %   root.cel = filecode;
-  %   and then do whatever
-  %% Run the associated functions/scripts
-  %% Save the data to a file named "outfile"
-  %   e.g. csvwrite(outfile, all_the_data);
+  Results = run_LNmodel_HD_ratCatcher(filename,filecode);
 
+  outfile = [outfile(end-2:end) 'mat'];
+  save(outfile, 'Results');
 
-end % function
+% end % function

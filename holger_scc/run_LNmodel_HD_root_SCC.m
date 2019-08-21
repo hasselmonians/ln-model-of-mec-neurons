@@ -1,6 +1,6 @@
 function run_LNmodel_HD_root_SCC(pathname)
 
-addpath(genpath('/projectnb/hasselmogrp/hdannenb_1/Scripts/LNmodel_HD_SCC'))
+% addpath(genpath('/projectnb/hasselmogrp/hdannenb_1/Scripts/LNmodel_HD_SCC'))
 addpath(genpath('/projectnb/hasselmogrp/Speed Modulation/CMBHOME'))
 
 import CMBHOME.*
