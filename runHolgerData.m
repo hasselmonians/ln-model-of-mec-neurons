@@ -7,6 +7,11 @@ r.protocol = 'LNLModel';
 r.project = 'hasselmogrp';
 r.verbose = true;
 
+load('/mnt/hasselmogrp/hoyland/data/holger/data-unmerged.mat')
+
+r.filenames = filenames;
+r.filecodes = filecodes;
+
 return
 
 % batch files
@@ -19,7 +24,7 @@ return
 % NOTE: once the cluster finishes, run the following commands
 
 % gather files
-r.batchname = 'Holger-LNLModel';
+r = r.validate;
 dataTable = r.gather;
 dataTable = r.stitch(dataTable);
 
