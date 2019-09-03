@@ -17,8 +17,8 @@ function batchFunction(index, location, batchname, outfile, test)
 
   % load the data
   % expect a 1x1 Session object named "root"
-  load(filename);
-  root.cel = filecode;
+  % load(filename);
+  % root.cel = filecode;
 
   Results = run_LNmodel_HD_ratCatcher(filename,filecode);
 
