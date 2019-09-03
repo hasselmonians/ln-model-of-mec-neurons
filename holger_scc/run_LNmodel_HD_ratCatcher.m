@@ -48,7 +48,7 @@ logical_inds = logical(logical_inds);
 % run quality check on cell
 quality_check = cell_quality_check_speed_coding(x.root,filecode,logical_inds_cut);
 if quality_check
-    
+
     % get epochs from logical_inds
     epochs_inds_for_mle = PeriodsAboveThr(double(logical_inds),1,2);
     epochs_mle = nan(length(epochs_inds_for_mle),2); % initialize matrix for epochs
@@ -62,7 +62,7 @@ if quality_check
     spktimes = CMBHOME.Utils.ContinuizeEpochs(x.root.cel_ts); % get spike times
     post = CMBHOME.Utils.ContinuizeEpochs(x.root.ts); % get time
     speed = CMBHOME.Utils.ContinuizeEpochs(x.root.vel) * x.root.spatial_scale; % get speed
-    
+
     %% Description of linear non-linear model published by Hardcastle et al.
     % This script is segmented into several parts. First, the data (an
     % example cell) is loaded. Then, 15 LN models are fit to the
@@ -76,11 +76,11 @@ if quality_check
     % train. Following this, the firing rate tuning curves are computed, and
     % these - along with the model-derived response profiles and the model
     % performance and results of the selection procedure are plotted.
-    
+
     % Code as implemented in Hardcastle, Maheswaranthan, Ganguli, Giocomo,
     % Neuron 2017
     % V1: Kiah Hardcastle, March 16, 2017
-    
+
     % rename to match notations of Hardcastle code and get
     % central position
     post = x.root.ts;
@@ -89,14 +89,14 @@ if quality_check
     % let the position points start at 0
     posx_c = posx_c - min(posx_c);
     posy_c = posy_c - min(posy_c);
-    
+
     %%%%%%%%%%%
     % randomly delete spikes, so that the total number of
     % spikes is 2400 (equivalent to 1Hz in a 40-min
     % recording)
     % nmbr_spikes = length(spktimes);
     nmbr_spikes = 2400;
-    
+
     if length(spktimes) < nmbr_spikes
         return
     end
@@ -104,22 +104,22 @@ if quality_check
     spikes = spktimes(p);
     spikes = sort(spikes);
     %%%%%%%%%%%%%%
-    
+
     % get spike train
     [~,real_spiketrain] = get_InstFR(spktimes,post,sr);
     [~,spiketrain] = get_InstFR(spikes,post,sr);
-    
-    boxSize = 100;
+
+    box_size = 100;
     eeg_sample_rate = 600;%250;
     theta_freq_range = [6 10];
-    
+
     %%% set active lfp to the other tetrode channel
     if filecode(1) == 1
         active_lfp = 2;
     elseif filecode(1) == 2
         active_lfp = 1;
     end
-    
+
     % get theta filtered EEG
     x.root.active_lfp = active_lfp;
     eeg_4800 = x.root.b_lfp(x.root.active_lfp).signal;
@@ -127,9 +127,9 @@ if quality_check
     eeg_600 = resample(eeg_4800,600,4800);
     % filt_eeg = CMBHOME.LFP.BandpassFilter(eeg_250, eeg_sample_rate, theta_freq_range);
     filt_eeg = CMBHOME.LFP.BandpassFilter(eeg_600, eeg_sample_rate, theta_freq_range);
-    
+
     % description of variables included:
-    % boxSize = length (in cm) of one side of the square box
+    % box_size = length (in cm) of one side of the square box
     % post = vector of time (seconds) at every 20 ms time bin
     % spiketrain = vector of the # of spikes in each 20 ms time bin
     % posx = x-position of left LED every 20 ms
@@ -141,26 +141,26 @@ if quality_check
     % filt_eeg = local field potential, filtered for theta frequency (4-12 Hz)
     % eeg_sample_rate = sample rate of filt_eeg (250 Hz)
     % sampleRate = sampling rate of neural data and behavioral variable (50Hz)
-    
+
     %% fit the model
     fprintf('(2/5) Fitting all linear-nonlinear (LN) models\n')
     fit_all_ln_models
-    
+
     %% find the simplest model that best describes the spike train
     fprintf('(3/5) Performing forward model selection\n')
     select_best_model
-    
+
     %% Compute the firing-rate tuning curves
     fprintf('(4/5) Computing tuning curves\n')
     compute_all_tuning_curves
-    
+
     %% plot the results
     fprintf('(5/5) Plotting performance and parameters\n')
     plot_performance_and_parameters
-    
+
     %% read out and save the following:
     tested_models = {'phst','phs','pht','pst','hst','ph','ps','pt','hs','ht','st','p','h','s','t;'};
-    
+
     % cell ID
     % speed tuning curve
     % best model, in particular if the cell's firing rate is
@@ -193,12 +193,11 @@ if quality_check
     Results.LLH_values = LLH_values;
     Results.tested_models = tested_models;
     Results.nmbr_spikes = nmbr_spikes;
-    
+
     %%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%
-    
+
     clearvars x.root
 else
     return
 end
-
