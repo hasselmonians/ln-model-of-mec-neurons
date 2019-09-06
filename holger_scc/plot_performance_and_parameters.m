@@ -11,30 +11,30 @@ theta_vector = hd_vector;
 % speed_vector = 2.5:50/n_speed_bins:47.5;
 speed_vector = 1:50/n_speed_bins:49.5;
 
-% plot the tuning curves
-figure(1)
-subplot(3,4,1)
-imagesc(pos_curve); colorbar
-axis off
-title('Position')
-subplot(3,4,2)
-plot(hd_vector,hd_curve,'k','linewidth',3)
-box off
-axis([0 2*pi -inf inf])
-xlabel('direction angle')
-title('Head direction')
-subplot(3,4,3)
-plot(speed_vector,speed_curve,'k','linewidth',3)
-box off
-xlabel('Running speed')
-axis([0 50 -inf inf])
-title('Speed')
-subplot(3,4,4)
-plot(theta_vector,theta_curve,'k','linewidth',3)
-xlabel('Theta phase')
-axis([0 2*pi -inf inf])
-box off
-title('Theta')
+% % plot the tuning curves
+% figure(1)
+% subplot(3,4,1)
+% imagesc(pos_curve); colorbar
+% axis off
+% title('Position')
+% subplot(3,4,2)
+% plot(hd_vector,hd_curve,'k','linewidth',3)
+% box off
+% axis([0 2*pi -inf inf])
+% xlabel('direction angle')
+% title('Head direction')
+% subplot(3,4,3)
+% plot(speed_vector,speed_curve,'k','linewidth',3)
+% box off
+% xlabel('Running speed')
+% axis([0 50 -inf inf])
+% title('Speed')
+% subplot(3,4,4)
+% plot(theta_vector,theta_curve,'k','linewidth',3)
+% xlabel('Theta phase')
+% axis([0 2*pi -inf inf])
+% box off
+% title('Theta')
 
 %% compute and plot the model-derived response profiles
 
@@ -61,44 +61,44 @@ hd_response = scale_factor_hd*exp(hd_param);
 speed_response = scale_factor_spd*exp(speed_param);
 theta_response = scale_factor_theta*exp(theta_param);
 
-% plot the model-derived response profiles
-subplot(3,4,5)
-imagesc(reshape(pos_response,20,20)); axis off;
-subplot(3,4,6)
-plot(hd_vector,hd_response,'k','linewidth',3)
-xlabel('direction angle')
-box off
-subplot(3,4,7)
-plot(speed_vector,speed_response,'k','linewidth',3)
-xlabel('Running speed')
-box off
-subplot(3,4,8)
-plot(theta_vector,theta_response,'k','linewidth',3)
-xlabel('Theta phase')
-axis([0 2*pi -inf inf])
-box off
-
-% make the axes match
-subplot(3,4,1)
-caxis([min(min(pos_response),min(pos_curve(:))) max(max(pos_response),max(pos_curve(:)))])
-subplot(3,4,5)
-caxis([min(min(pos_response),min(pos_curve(:))) max(max(pos_response),max(pos_curve(:)))])
-
-subplot(3,4,2)
-axis([0 2*pi min(min(hd_response),min(hd_curve)) max(max(hd_response),max(hd_curve))])
-subplot(3,4,6)
-axis([0 2*pi min(min(hd_response),min(hd_curve)) max(max(hd_response),max(hd_curve))])
-
-subplot(3,4,3)
-axis([0 50 min(min(speed_response),min(speed_curve)) max(max(speed_response),max(speed_curve))])
-subplot(3,4,7)
-axis([0 50 min(min(speed_response),min(speed_curve)) max(max(speed_response),max(speed_curve))])
-
-subplot(3,4,4)
-axis([0 2*pi min(min(theta_response),min(theta_curve)) max(max(theta_response),max(theta_curve))])
-subplot(3,4,8)
-axis([0 2*pi min(min(theta_response),min(theta_curve)) max(max(theta_response),max(theta_curve))])
-
+% % plot the model-derived response profiles
+% subplot(3,4,5)
+% imagesc(reshape(pos_response,20,20)); axis off;
+% subplot(3,4,6)
+% plot(hd_vector,hd_response,'k','linewidth',3)
+% xlabel('direction angle')
+% box off
+% subplot(3,4,7)
+% plot(speed_vector,speed_response,'k','linewidth',3)
+% xlabel('Running speed')
+% box off
+% subplot(3,4,8)
+% plot(theta_vector,theta_response,'k','linewidth',3)
+% xlabel('Theta phase')
+% axis([0 2*pi -inf inf])
+% box off
+%
+% % make the axes match
+% subplot(3,4,1)
+% caxis([min(min(pos_response),min(pos_curve(:))) max(max(pos_response),max(pos_curve(:)))])
+% subplot(3,4,5)
+% caxis([min(min(pos_response),min(pos_curve(:))) max(max(pos_response),max(pos_curve(:)))])
+%
+% subplot(3,4,2)
+% axis([0 2*pi min(min(hd_response),min(hd_curve)) max(max(hd_response),max(hd_curve))])
+% subplot(3,4,6)
+% axis([0 2*pi min(min(hd_response),min(hd_curve)) max(max(hd_response),max(hd_curve))])
+%
+% subplot(3,4,3)
+% axis([0 50 min(min(speed_response),min(speed_curve)) max(max(speed_response),max(speed_curve))])
+% subplot(3,4,7)
+% axis([0 50 min(min(speed_response),min(speed_curve)) max(max(speed_response),max(speed_curve))])
+%
+% subplot(3,4,4)
+% axis([0 2*pi min(min(theta_response),min(theta_curve)) max(max(theta_response),max(theta_curve))])
+% subplot(3,4,8)
+% axis([0 2*pi min(min(theta_response),min(theta_curve)) max(max(theta_response),max(theta_curve))])
+%
 
 %% compute and plot the model performances
 
@@ -109,20 +109,19 @@ axis([0 2*pi min(min(theta_response),min(theta_curve)) max(max(theta_response),m
 LLH_increase_mean = mean(LLH_values);
 LLH_increase_sem = std(LLH_values)/sqrt(numFolds);
 
-figure(1)
-subplot(3,4,9:12)
-errorbar(LLH_increase_mean,LLH_increase_sem,'ok','linewidth',3)
-hold on
-if ~isnan(selected_model)
-    plot(selected_model,LLH_increase_mean(selected_model),'.r','markersize',25)
-end
-plot(0.5:15.5,zeros(16,1),'--b','linewidth',2)
-hold off
-box off
-set(gca,'fontsize',20)
-set(gca,'XLim',[0 16]); set(gca,'XTick',1:15)
-set(gca,'XTickLabel',{'PHST','PHS','PHT','PST','HST','PH','PS','PT','HS',...
-    'HT','ST','P','H','S','T'});
-% legend('Model performance','Selected model','Baseline')
-
-
+% figure(1)
+% subplot(3,4,9:12)
+% errorbar(LLH_increase_mean,LLH_increase_sem,'ok','linewidth',3)
+% hold on
+% if ~isnan(selected_model)
+%     plot(selected_model,LLH_increase_mean(selected_model),'.r','markersize',25)
+% end
+% plot(0.5:15.5,zeros(16,1),'--b','linewidth',2)
+% hold off
+% box off
+% set(gca,'fontsize',20)
+% set(gca,'XLim',[0 16]); set(gca,'XTick',1:15)
+% set(gca,'XTickLabel',{'PHST','PHS','PHT','PST','HST','PH','PS','PT','HS',...
+%     'HT','ST','P','H','S','T'});
+% % legend('Model performance','Selected model','Baseline')
+%
