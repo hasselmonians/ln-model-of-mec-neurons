@@ -1,6 +1,6 @@
 r = RatCatcher;
 
-r.expID = {'Caitlin', 'A'; 'Caitlin', 'B'; 'Caitlin', 'C'; 'Caitlin', 'D', 'Caitlin', 'E'; 'Caitlin', 'F'};
+r.expID = {'Caitlin', 'A'; 'Caitlin', 'B'; 'Caitlin', 'C'; 'Caitlin', 'D'; 'Caitlin', 'E'; 'Caitlin', 'F'};
 r.remotepath = '/projectnb/hasselmogrp/hoyland/LNLModel/cluster/';
 r.localpath = '/mnt/hasselmogrp/hoyland/LNLModel/cluster/';
 r.protocol = 'LNLModel';
