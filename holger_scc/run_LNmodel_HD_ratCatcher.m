@@ -5,8 +5,8 @@ import CMBHOME.*
 x = load(filename);
 
 %%%%%% Apply speed filter (only for Caitlin's rat data)
-%             x.root.b_vel = [];
-%             x.root = x.root.AppendKalmanVel;
+x.root.b_vel = [];
+x.root = x.root.AppendKalmanVel;
 
 % set epoch to [-inf inf] for filtering out the time scales
 x.root.epoch = [-inf inf];
