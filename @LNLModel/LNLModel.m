@@ -94,6 +94,7 @@ methods (Static)
   [tuning_curve] = compute_2d_tuning_curve(variable_x,variable_y,fr,numBin,minVal,maxVal)
   [frFilt,spkTrain] = get_InstFR(spktimes, time, sampling_rate_of_time, varargin)
   batchFunction(index, batchname, location, outfile, test)
+  batchFunction_parallel(bin_id, bin_total, location, batchname, outfile, test)
 
 end % static methods
 
