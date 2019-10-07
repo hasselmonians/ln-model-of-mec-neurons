@@ -22,7 +22,7 @@ function batchFunction(index, location, batchname, outfile, test)
 
   Results = run_LNmodel_HD_ratCatcher(filename,filecode);
 
-  outfile = [outfile(1:end-2) 'mat'];
+  outfile = [outfile(1:end-3) 'mat'];
   save(outfile, 'Results');
 
 % end % function
