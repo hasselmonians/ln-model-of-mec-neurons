@@ -12,7 +12,7 @@ n_speed_bins = 25; % also change numSpd in ln_poisson_model and speedVector in p
 n_theta_bins = 18;
 
 % compute position matrix
-[posgrid, posVec] = pos_map([posx_c posy_c], n_pos_bins, box_size);
+[posgrid, posVecX, posVecY] = pos_map([posx_c posy_c], n_pos_bins, box_size);
 
 % compute head direction matrix
 [hdgrid,hdVec,direction] = hd_map_root(x.root.sheaddir,n_dir_bins);
