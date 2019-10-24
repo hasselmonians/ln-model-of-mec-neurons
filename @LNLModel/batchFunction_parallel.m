@@ -13,6 +13,20 @@ function batchFunction_parallel(bin_id, bin_total, location, batchname, outfile,
 
   [bin_start, bin_finish] = getParallelOptions(bin_id, bin_total, location, batchname);
 
+  % set up 'local' parallel pool cluster
+  pc = parcluster('local');
+
+  % discover the number of available cores assigned by SGE
+  nCores = str2num(getenv('NSLOTS'));
+
+  % set up directory for temporary parallel pool files
+  parpool_tmpdir = ['~/.matlab/local_cluster_jobs/ratcatcher/ratcatcher_' bin_id];
+  mkdir(parpool_tmpdir);
+  pc.JobStorageLocation = parpool_tmpdir;
+
+  % start parallel pool
+  parpool(pc, nCores);
+
   parfor ii = bin_start:bin_finish
 
     % acquire the filename and filecode
