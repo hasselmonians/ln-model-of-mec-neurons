@@ -12,6 +12,8 @@ x.root = x.root.AppendKalmanVel;
 x.root.epoch = [-inf inf];
 % fix time
 x.root = x.root.FixTime;
+x.root = x.root.FixPos;
+x.root = x.root.FixDir;
 % pull out speed and time
 spd = CMBHOME.Utils.ContinuizeEpochs(x.root.vel) * x.root.spatial_scale;
 ts = CMBHOME.Utils.ContinuizeEpochs(x.root.ts);
