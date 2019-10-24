@@ -112,6 +112,8 @@ if quality_check
     % set the box size based on Caitlin's experimental setup
     box_size = 100;
 
+    %% Acquire the theta phase
+
     % find the best theta wave recording out of the possible options
     median_theta_wave_amplitude = zeros(size(root.b_lfp));
     for ii = 1:numel(root.b_lfp)
