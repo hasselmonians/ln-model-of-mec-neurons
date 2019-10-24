@@ -110,25 +110,19 @@ if quality_check
     [~,spiketrain] = get_InstFR(spikes,post,sr);
 
     box_size = 100;
-    eeg_sample_rate = 600;%250;
-    theta_freq_range = [6 10];
 
-    %%% set active lfp to the other tetrode channel
-    if filecode(1) == 1
-        active_lfp = 2;
-    elseif filecode(1) == 2
-        active_lfp = 1;
+    % acquire the sampling rate by checking the root object
+    try
+        eeg_sample_rate = x.root.b_lfp(1).fs;
+    catch
+        eeg_sample_rate = 508.6875;
     end
 
-    % get theta filtered EEG
-    % TODO: get the best signal from b_lfp
-    % TODO: upsample to 600 Hz OR skip all of this and just use the already computed phase
-    x.root.active_lfp = active_lfp;
-    eeg_4800 = x.root.b_lfp(x.root.active_lfp).signal;
-    % eeg_250 = resample(eeg_4800,250,4800);
-    eeg_600 = resample(eeg_4800,600,4800);
-    % filt_eeg = CMBHOME.LFP.BandpassFilter(eeg_250, eeg_sample_rate, theta_freq_range);
-    filt_eeg = CMBHOME.LFP.BandpassFilter(eeg_600, eeg_sample_rate, theta_freq_range);
+    theta_freq_range = [6 10];
+
+    % acquire the theta phase
+    phase = x.root.b_lfp(1).signal; % TODO: pick the correct index
+
 
     % description of variables included:
     % box_size = length (in cm) of one side of the square box
