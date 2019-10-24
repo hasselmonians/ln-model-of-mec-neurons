@@ -109,20 +109,25 @@ if quality_check
     [~,real_spiketrain] = get_InstFR(spktimes,post,sr);
     [~,spiketrain] = get_InstFR(spikes,post,sr);
 
+    % set the box size based on Caitlin's experimental setup
     box_size = 100;
+
+    % find the best theta wave recording out of the possible options
+    median_theta_wave_amplitude = zeros(size(root.b_lfp));
+    for ii = 1:numel(root.b_lfp)
+        median_theta_wave_amplitude(ii) = median(root.b_lfp(ii).theta_amplitude);
+    end
+    [~, best_theta_index] = max(median_theta_wave_amplitude);
 
     % acquire the sampling rate by checking the root object
     try
-        eeg_sample_rate = x.root.b_lfp(1).fs;
+        eeg_sample_rate = x.root.b_lfp(best_theta_index).fs;
     catch
         eeg_sample_rate = 508.6875;
     end
 
-    theta_freq_range = [6 10];
-
     % acquire the theta phase
-    phase = x.root.b_lfp(1).signal; % TODO: pick the correct index
-
+    phase = x.root.b_lfp(best_theta_index).signal; % TODO: pick the correct index
 
     % description of variables included:
     % box_size = length (in cm) of one side of the square box
