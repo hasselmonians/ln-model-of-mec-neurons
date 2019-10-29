@@ -7,10 +7,11 @@ r.protocol = 'LNLModel';
 r.project = 'hasselmogrp';
 r.verbose = true;
 
-load('/mnt/hasselmogrp/hoyland/data/holger/data-unmerged.mat')
-
-r.filenames = filenames;
-r.filecodes = filecodes;
+% load('/mnt/hasselmogrp/hoyland/data/holger/data-unmerged.mat')
+%
+% r.filenames = filenames;
+% r.filecodes = filecodes;
+% r.parallel = true;
 
 return
 
