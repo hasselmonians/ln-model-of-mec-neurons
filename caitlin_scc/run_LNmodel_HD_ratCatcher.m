@@ -131,7 +131,7 @@ if quality_check
     end
 
     % acquire the theta phase
-    phase = x.root.b_lfp(best_theta_index).signal; % TODO: pick the correct index
+    phase = x.root.b_lfp(best_theta_index).theta_phase;
 
     % description of variables included:
     % box_size = length (in cm) of one side of the square box
