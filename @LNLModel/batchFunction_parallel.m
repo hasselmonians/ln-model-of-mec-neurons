@@ -20,7 +20,7 @@ function batchFunction_parallel(bin_id, bin_total, location, batchname, outfile,
   nCores = str2num(getenv('NSLOTS'));
 
   % set up directory for temporary parallel pool files
-  parpool_tmpdir = ['~/.matlab/local_cluster_jobs/ratcatcher/ratcatcher_' bin_id];
+  parpool_tmpdir = ['~/.matlab/local_cluster_jobs/ratcatcher/ratcatcher_' num2str(bin_id)];
   mkdir(parpool_tmpdir);
   pc.JobStorageLocation = parpool_tmpdir;
 
@@ -28,6 +28,10 @@ function batchFunction_parallel(bin_id, bin_total, location, batchname, outfile,
   parpool(pc, nCores);
 
   parfor ii = bin_start:bin_finish
+
+    % set up dummy outfile variable
+    outfile_pc = outfile;
+    outfile_pc = [outfile_pc(1:end-3), 'mat'];
 
     % acquire the filename and filecode
     % the filecode should be the "cell number" as a 1x2 vector
@@ -40,8 +44,7 @@ function batchFunction_parallel(bin_id, bin_total, location, batchname, outfile,
 
     Results = run_LNmodel_HD_ratCatcher(filename,filecode);
 
-    outfile = [outfile(1:end-3) 'mat'];
-    save(outfile, 'Results');
+    save(outfile_pc, 'Results');
 
   end
 
