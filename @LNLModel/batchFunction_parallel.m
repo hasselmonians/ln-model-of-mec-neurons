@@ -31,7 +31,7 @@ function batchFunction_parallel(bin_id, bin_total, location, batchname, outfile,
 
     % set up dummy outfile variable
     outfile_pc = outfile;
-    outfile_pc = [outfile_pc(1:end-3), 'mat'];
+    outfile_pc = [outfile_pc '-' num2str(ii) '.mat'];
 
     % acquire the filename and filecode
     % the filecode should be the "cell number" as a 1x2 vector
