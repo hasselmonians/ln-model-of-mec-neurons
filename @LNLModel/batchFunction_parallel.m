@@ -11,7 +11,7 @@ function batchFunction_parallel(bin_id, bin_total, location, batchname, outfile,
     addpath(genpath('/projectnb/hasselmogrp/hoyland/ln-model-of-mec-neurons'))
   end
 
-  [bin_start, bin_finish] = getParallelOptions(bin_id, bin_total, location, batchname);
+  [bin_start, bin_finish] = RatCatcher.getParallelOptions(bin_id, bin_total, location, batchname);
 
   % set up 'local' parallel pool cluster
   pc = parcluster('local');
